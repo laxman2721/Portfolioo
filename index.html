@@ -46,7 +46,7 @@
         }
     </style>
 </head>
-<body class="animated-bg text-slate-800 font-sans" x-data="{ isScrolled: false, weatherModal: false }" @scroll.window="isScrolled = (window.pageYOffset > 50)">
+<body class="animated-bg text-slate-800 font-sans" x-data="{ isScrolled: false, weatherModal: false, trashModal: false }" @scroll.window="isScrolled = (window.pageYOffset > 50)">
 
     <nav :class="isScrolled ? 'bg-white/80 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'" 
          class="fixed top-0 w-full z-50 transition-all duration-300">
@@ -239,8 +239,8 @@
                 <p class="text-slate-500">Showcasing my technical implementations</p>
             </div>
             
-            <div class="flex justify-center">
-                <div class="reveal max-w-2xl w-full bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+            <div class="flex justify-center items-start gap-6 flex-col md:flex-row md:items-stretch">
+                <div class="reveal w-full md:w-1/2 max-w-[520px] bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
                     <div class="p-8 md:p-12">
                         <div class="flex items-center justify-between mb-6">
                             <div class="p-4 bg-blue-100 rounded-2xl text-blue-600">
@@ -262,10 +262,96 @@
                         </button>
                     </div>
                 </div>
+
+                <div class="reveal w-full md:w-1/2 max-w-[520px] bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="p-8 md:p-12">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="p-4 bg-green-100 rounded-2xl text-green-600">
+                                <i data-lucide="trash-2" class="w-10 h-10"></i>
+                            </div>
+                            <span class="text-xs font-bold text-green-500 uppercase tracking-widest">Embedded Systems</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4 group-hover:text-green-600 transition-colors">Smart Trash Bin</h3>
+                        <p class="text-slate-600 mb-8 text-lg leading-relaxed">
+                            Developed an automated waste management system using the ESP32 microcontroller and embedded C++. The system uses ultrasonic and capacitive touch sensors to enable contactless lid operation, improving hygiene. Integrated a servo motor for automatic lid control and BO motors for movement along predefined paths using line-following sensors. Implemented obstacle detection to ensure safe navigation in dynamic environments. The project reduces human effort and minimizes the spread of germs through touchless interaction. It demonstrates practical applications of embedded systems, automation, and IoT concepts. The system is scalable and can be enhanced with real-time monitoring and mobile app integration.
+                        </p>
+                        <div class="flex flex-wrap gap-3 mb-10">
+                            <span class="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">ESP32</span>
+                            <span class="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">Embedded C++</span>
+                            <span class="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">Ultrasonic</span>
+                            <span class="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">Capacitive Touch</span>
+                            <span class="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">Servo</span>
+                            <span class="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">Line-Following</span>
+                        </div>
+                        <button @click="trashModal = true" class="inline-flex items-center gap-2 text-green-600 text-lg font-bold hover:gap-4 transition-all focus:outline-none">
+                            View Case Study <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
+    <div x-show="trashModal" 
+         class="fixed inset-0 z-[100] flex items-center justify-center px-4" 
+         x-cloak>
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" @click="trashModal = false"></div>
+        
+        <div class="relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-y-auto max-h-[90vh] p-8 md:p-12"
+             x-show="trashModal"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100">
+            
+            <button @click="trashModal = false" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Smart Trash Bin: Case Study</h2>
+            
+            <div class="space-y-8">
+                <div>
+                    <h4 class="text-green-600 font-bold text-sm uppercase tracking-widest mb-2">Problem</h4>
+                    <p class="text-slate-600">Manual trash handling and lack of hygienic disposal increase the risk of germ spread and inefficient waste collection.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-green-600 font-bold text-sm uppercase tracking-widest mb-2">The Solution</h4>
+                    <p class="text-slate-600">An ESP32-based automated bin offering contactless lid operation, autonomous movement along predefined paths, and obstacle detection for safe navigation.</p>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-2xl border border-green-100">
+                    <h4 class="text-slate-900 font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="code-2" class="w-5 h-5 text-green-600"></i> Key Technical Implementations
+                    </h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-600 flex-shrink-0"></div>
+                            <p class="text-sm text-slate-600"><strong>Contactless Interaction:</strong> Ultrasonic and capacitive touch sensors for hygienic lid control.</p>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-600 flex-shrink-0"></div>
+                            <p class="text-sm text-slate-600"><strong>Autonomous Movement:</strong> BO motors + line-following sensors to traverse predefined routes.</p>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-600 flex-shrink-0"></div>
+                            <p class="text-sm text-slate-600"><strong>Safety:</strong> Obstacle detection to prevent collisions and ensure safe operation.</p>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-600 flex-shrink-0"></div>
+                            <p class="text-sm text-slate-600"><strong>Control:</strong> ESP32 running embedded C++ coordinating sensors, servo for lid, and motor drivers.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-10">
+                <button @click="trashModal = false" class="w-full py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 transition-colors shadow-lg shadow-green-200">
+                    Close Overview
+                </button>
+            </div>
+        </div>
+    </div>
     <div x-show="weatherModal" 
          class="fixed inset-0 z-[100] flex items-center justify-center px-4" 
          x-cloak>
@@ -357,8 +443,9 @@
 
         function downloadResume() {
             const link = document.createElement('a');
-            link.href = 'Sri laxman Resume.pdf'; 
-            link.download = 'Srilaxman_S_Resume.pdf';
+            const fileName = 'Sri laxman Resume.pdf';
+            link.href = encodeURI(fileName);
+            link.setAttribute('download', 'Srilaxman_S_Resume.pdf');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
